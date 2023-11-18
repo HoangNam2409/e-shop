@@ -3,24 +3,47 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import styles from "../../styles/styles.js";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { server } from "../../server.js";
 
 export default function SignUp() {
     const [formData, setFormData] = useState({
-        username: "",
+        name: "",
         email: "",
         password: "",
         avatar: null,
     });
+    
+    const [avatar, setAvatar] = useState(null);
     const [visible, setVisible] = useState(false);
-
-    console.log(formData);
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.id]: e.target.value,
-            avatar: e.target.files[0],
         });
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFormData({
+            ...formData,
+            avatar: file
+        })
+        setAvatar(file);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+       
+        axios
+            .post(`${server}/user/create-user`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
     };
 
     return (
@@ -33,25 +56,25 @@ export default function SignUp() {
 
             <div className="mt-8 sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <form className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         {/* UserName Input */}
                         <div>
                             <label
-                                htmlFor="username"
+                                htmlFor="name"
                                 className="block text-sm font-medium text-gray-700"
                             >
-                                Username
+                                Name
                             </label>
 
                             <div className="mt-1">
                                 <input
                                     type="text"
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                    name="username"
-                                    id="username"
-                                    autoComplete="username"
+                                    name="name"
+                                    id="name"
+                                    autoComplete="name"
                                     required
-                                    value={formData.username}
+                                    value={formData.name}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -125,11 +148,9 @@ export default function SignUp() {
                             ></label>
                             <div className="mt-2 flex items-center">
                                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
-                                    {formData.avatar ? (
+                                    {avatar ? (
                                         <img
-                                            src={URL.createObjectURL(
-                                                formData.avatar
-                                            )}
+                                            src={URL.createObjectURL(avatar)}
                                             alt="Avatar"
                                         />
                                     ) : (
@@ -148,12 +169,11 @@ export default function SignUp() {
                                         name="avatar"
                                         id="file-input"
                                         accept="image/*"
-                                        onChange={handleChange}
+                                        onChange={handleFileChange}
                                     />
                                 </label>
                             </div>
                         </div>
-
 
                         {/* Button Submit */}
                         <div>

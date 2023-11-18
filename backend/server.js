@@ -1,5 +1,6 @@
 import app from "./app.js";
 import dotenv from "dotenv";
+import connectDatabase from "./db/Database.js";
 
 // Handling uncaught exception
 process.on("uncaughtException", (err) => {
@@ -13,6 +14,9 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
         path: "config/.env",
     });
 }
+
+// Connect to server
+connectDatabase()
 
 // Create server
 const server = app.listen(process.env.PORT, () =>
