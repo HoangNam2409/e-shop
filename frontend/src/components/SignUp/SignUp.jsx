@@ -5,6 +5,7 @@ import styles from "../../styles/styles.js";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server.js";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
     const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ export default function SignUp() {
         password: "",
         avatar: null,
     });
-    
+
     const [avatar, setAvatar] = useState(null);
     const [visible, setVisible] = useState(false);
 
@@ -28,22 +29,32 @@ export default function SignUp() {
         const file = e.target.files[0];
         setFormData({
             ...formData,
-            avatar: file
-        })
+            avatar: file,
+        });
         setAvatar(file);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
+
         axios
             .post(`${server}/user/create-user`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+            .then((res) => {
+                toast.success(res.data.message);
+                setFormData({
+                    name: "",
+                    email: "",
+                    password: "",
+                    avatar: null,
+                });
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message);
+            });
     };
 
     return (
