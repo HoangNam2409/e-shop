@@ -8,9 +8,11 @@ import jwt from "jsonwebtoken";
 import sendMail from "../utils/sendMail.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 import sendToken from "../utils/jwtToken.js";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
+// Sign up
 router.post("/create-user", upload.single("avatar"), async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
@@ -95,6 +97,41 @@ router.post(
                 password,
                 avatar,
             });
+
+            sendToken(user, 201, res);
+        } catch (error) {
+            return next(new ErrorHandler(error.message, 500));
+        }
+    })
+);
+
+// Log In User
+router.post(
+    "/login-user",
+    catchAsyncErrors(async (req, res, next) => {
+        try {
+            const { email, password } = req.body;
+            if (!email || !password) {
+                return next(
+                    new ErrorHandler("Please provide the all fields!", 400)
+                );
+            }
+            const user = await User.findOne({ email }).select("+password");
+
+            if (!user) {
+                return next(new ErrorHandler("User doesn't exist!", 400));
+            }
+
+            const isPasswordValid = await user.comparePassword(password);
+
+            if (!isPasswordValid) {
+                return next(
+                    new ErrorHandler(
+                        "Please provide the correct password!",
+                        400
+                    )
+                );
+            }
 
             sendToken(user, 201, res);
         } catch (error) {

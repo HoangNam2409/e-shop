@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles.js";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
+import {server} from '../../server.js'
+import {toast} from 'react-toastify'
+ 
 export default function Login() {
     const [formData, setFormData] = useState({
         email: '',
@@ -10,10 +13,25 @@ export default function Login() {
     });
     const [visible, setVisible] = useState(false);
 
+    const navigate = useNavigate()
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.id]: e.target.value
+        })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        await axios.post(`${server}/user/login-user`, formData, {
+            withCredentials: true,
+        }).then((res) => {
+            toast.success('Login Successfully!')
+            navigate('/')
+        }).catch((err) => {
+            toast.error(err.response.data.message)
         })
     }
 
@@ -27,7 +45,7 @@ export default function Login() {
 
             <div className="mt-8 sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    <form className="space-y-6">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
                         {/* Email Input */}
                         <div>
                             <label
