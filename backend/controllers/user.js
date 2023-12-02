@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 import sendMail from "../utils/sendMail.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 import sendToken from "../utils/jwtToken.js";
-import bcrypt from "bcrypt";
+import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -139,5 +139,23 @@ router.post(
         }
     })
 );
+
+// Load user
+router.get('/get-user', isAuthenticated, catchAsyncErrors(async(req, res, next) => {
+    try {
+        const user = await User.findById(req.user.id)
+        
+        if(!user) {
+            return next(new ErrorHandler("User doesn't exist!", 400))
+        }
+
+        res.status(200).json({
+            success: true,
+            user,
+        })
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500))
+    }
+}))
 
 export default router;
