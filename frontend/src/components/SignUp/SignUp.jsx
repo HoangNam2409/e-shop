@@ -51,6 +51,7 @@ export default function SignUp() {
                     password: "",
                     avatar: null,
                 });
+                setAvatar(null)
             })
             .catch((err) => {
                 toast.error(err.response.data.message);

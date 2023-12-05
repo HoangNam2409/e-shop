@@ -81,6 +81,7 @@ router.post(
 
             if (!newUser) {
                 return next(new ErrorHandler("Invalid Token", 400));
+
             }
 
             const { name, email, password, avatar } = newUser;
@@ -141,21 +142,25 @@ router.post(
 );
 
 // Load user
-router.get('/get-user', isAuthenticated, catchAsyncErrors(async(req, res, next) => {
-    try {
-        const user = await User.findById(req.user.id)
-        
-        if(!user) {
-            return next(new ErrorHandler("User doesn't exist!", 400))
-        }
+router.get(
+    "/get-user",
+    isAuthenticated,
+    catchAsyncErrors(async (req, res, next) => {
+        try {
+            const user = await User.findById(req.user.id);
 
-        res.status(200).json({
-            success: true,
-            user,
-        })
-    } catch (error) {
-        return next(new ErrorHandler(error.message, 500))
-    }
-}))
+            if (!user) {
+                return next(new ErrorHandler("User doesn't exist!", 400));
+            }
+
+            res.status(200).json({
+                success: true,
+                user,
+            });
+        } catch (error) {
+            return next(new ErrorHandler(error.message, 500));
+        }
+    })
+);
 
 export default router;
