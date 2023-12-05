@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { LoginPage, SignUpPage, ActivationPage } from "./Routes";
-import { ToastContainer, toast } from "react-toastify";
+import { LoginPage, SignUpPage, ActivationPage, HomePage } from "./Routes";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import store from "./redux/store.js";
@@ -15,6 +15,7 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
+                    <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/sign-up" element={<SignUpPage />} />
                     <Route
