@@ -178,7 +178,7 @@ export default function Header({ activeHeading }) {
                             {/* Icon Profile */}
                             <div className={`${styles.noramlFlex}`}>
                                 <div className="relative cursor-pointer mr-[15px]">
-                                    <Link to='/login'>
+                                    <Link to="/login">
                                         <CgProfile
                                             size={30}
                                             color="rgba(255 255 255 / 83%)"

@@ -44,7 +44,7 @@ export const brandingData = [
                     strokeWidth="2"
                     strokeMiterlimit="10"
                     strokeLinecap="square"
-                ></path>    
+                ></path>
 
                 <path
                     d="M8.72763 35.0002C10.4347 35.0002 11.8185 33.6163 11.8185 31.9093C11.8185 30.2022 10.4347 28.8184 8.72763 28.8184C7.02057 28.8184 5.63672 30.2022 5.63672 31.9093C5.63672 33.6163 7.02057 35.0002 8.72763 35.0002Z"
@@ -190,7 +190,6 @@ export const brandingData = [
     },
 ];
 
-
 // categories data
 export const categoriesData = [
     {
@@ -239,7 +238,8 @@ export const categoriesData = [
         id: 7,
         title: "Pet Care",
         subTitle: "",
-        image_Url: "https://root-nation.com/wp-content/uploads/2023/06/cats-header-2-700x489.jpg",
+        image_Url:
+            "https://root-nation.com/wp-content/uploads/2023/06/cats-header-2-700x489.jpg",
     },
     {
         id: 8,
@@ -253,7 +253,7 @@ export const categoriesData = [
         title: "Music and Gaming",
         subTitle: "",
         image_Url:
-            "https://static.vecteezy.com/system/resources/previews/011/996/555/original/3d-black-headphone-illustration-ecommerce-icon-png.png",
+            "https://static.vecteezy.com/system/resources/previews/011/996/555/original/3d-black-headphone-illustration-ecommerce-iconpng.png",
     },
     {
         id: 10,
