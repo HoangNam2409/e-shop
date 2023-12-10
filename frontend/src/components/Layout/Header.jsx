@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../../styles/styles.js";
 import { Link } from "react-router-dom";
-import { productData, categoriesData } from "../../static/data.js";
+import { productData, categoriesData } from "../../static/data.jsx";
 import {
     AiOutlineHeart,
     AiOutlineSearch,
