@@ -9,6 +9,7 @@ import {
     AiOutlineShoppingCart,
     AiOutlineStar,
 } from "react-icons/ai";
+import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard.jsx";
 
 export default function ProductCard({ data }) {
     const [click, setClick] = useState(false);
@@ -112,12 +113,16 @@ export default function ProductCard({ data }) {
                 />
 
                 <AiOutlineShoppingCart
-                    size={22}
+                    size={25}
                     className="cursor-pointer absolute right-2 top-24"
                     onClick={() => setOpen(!open)}
                     color="#444"
                     title="Add to cart"
                 />
+
+                {
+                    open ? <ProductDetailsCard open={open} setOpen={setOpen} data={data} /> : null
+                }
             </div>
         </div>
     );
