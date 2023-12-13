@@ -264,7 +264,7 @@ export const categoriesData = [
     },
 ];
 
-// // product Data
+// product Data
 export const productData = [
     {
         id: 1,

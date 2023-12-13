@@ -14,7 +14,7 @@ export default function HomePage() {
             <Header activeHeading={1} />
             <Hero />
             <Categories />
-            <BestDeals /> d
+            <BestDeals />
             <Events />
             <FeaturedProduct />
             <Sponsored />
