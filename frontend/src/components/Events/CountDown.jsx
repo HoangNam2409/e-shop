@@ -12,7 +12,7 @@ export default function CountDown() {
     });
 
     function calculateTimeLeft() {
-        const difference = +new Date("2023-12-13") - +new Date();
+        const difference = +new Date("2023-12-20") - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {

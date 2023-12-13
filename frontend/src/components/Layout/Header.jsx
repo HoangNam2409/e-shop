@@ -12,8 +12,11 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import DropDown from "./DropDown.jsx";
 import Navbar from "./Navbar.jsx";
+import { useSelector } from "react-redux";
+import { backend_url } from "../../server.js";
 
 export default function Header({ activeHeading }) {
+    const { isAuthenticated, user } = useSelector((state) => state.user);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchData, setSearchData] = useState(null);
     const [active, setActive] = useState(false);
@@ -178,12 +181,22 @@ export default function Header({ activeHeading }) {
                             {/* Icon Profile */}
                             <div className={`${styles.noramlFlex}`}>
                                 <div className="relative cursor-pointer mr-[15px]">
-                                    <Link to="/login">
-                                        <CgProfile
-                                            size={30}
-                                            color="rgba(255 255 255 / 83%)"
-                                        />
-                                    </Link>
+                                    {isAuthenticated ? (
+                                        <Link to="/profile">
+                                            <img
+                                                src={`${backend_url}${user.avatar}`}
+                                                className="w-[35px] h-[35px] rounded-full object-cover"
+                                                alt=""
+                                            />
+                                        </Link>
+                                    ) : (
+                                        <Link to="/login">
+                                            <CgProfile
+                                                size={30}
+                                                color="rgba(255 255 255 / 83%)"
+                                            />
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>
